@@ -4,3 +4,7 @@
 body{
     background-color: #918c8c;
 }
+.container-category{
+    background-color: white;
+    box-shadow:  0 0 0 0.1rem rgba(0, 0, 0, 0);
+}
