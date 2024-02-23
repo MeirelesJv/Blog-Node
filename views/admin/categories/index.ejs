@@ -21,10 +21,11 @@
                     <th><%= categories.title %></th>
                     <th><%= categories.slug %></th>
                     <th>
-                        <button class="btn btn-warning">Editar</button>
-                        <form method="POST" action="/categories/delete">
+                        <input type="hidden" name="id" value="<%= categories.id %>">
+                        <a href="/admin/categories/edit/<%= categories.id %>"><button class="btn btn-warning">Editar</button></a>
+                        <form method="POST" action="/categories/delete" style="display: inline;" onsubmit="confirmarDelete(event, this)">
                             <input type="hidden" name="id" value="<%= categories.id %>">
-                            <button class="btn btn-danger"><ion-icon name="trash-bin-outline"></ion-icon></button>
+                            <button class="btn btn-danger">deletar</button>
                         </form>
                     </th>
                 </tr>
@@ -36,3 +37,12 @@
 <%- include('../../partials/footer.ejs') %>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script>
+    function confirmarDelete(event, form){
+        event.preventDefault();
+        var decision = confirm("Voce quer deletar essa categoria?");
+         if(decision){
+            form.submit();
+        }
+    }
+</script>
