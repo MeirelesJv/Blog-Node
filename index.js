@@ -32,9 +32,31 @@ connection.authenticate().then(() =>{
     })
 
 app.get("/",(req,res) =>{
-   res.render("index")
+    Articles.findAll({
+        include: [{model: Category}] 
+    }).then(articles =>{
+        res.render("index",{articles: articles})
+    })
+   
 });
 
 app.get("/login",(req,res) => {
     res.render("login")
+});
+
+app.get("/:slug",(req,res)=>{
+    var slug = req.params.slug;
+    Articles.findOne({
+        where: {
+            slug: slug
+        }
+    }).then(article => {
+        if(article != undefined){
+            res.render("articles");
+        }else{
+            res.redirect("/");
+        }
+    }).catch(err =>{
+        res.redirect("/");
+    });
 });

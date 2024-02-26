@@ -1,12 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const category = require("../categories/category");
+const category = require("../categories/Category");
 const article = require("./Article");
 const slugify = require("slugify");
 
 // Router é a mesma coisa que o app
 router.get("/admin/articles",(req,res) => {
-    res.send("articles")
+    article.findAll({
+        include: [{model: category}] //Inclui a categoria pois as duas estão relacionadas 
+    }).then(articles =>{
+    res.render("admin/articles/index",{articles: articles});
+    })  
 });
 
 router.get("/admin/articles/new",(req,res) => {
@@ -27,10 +31,31 @@ router.post("/articles/save",(req,res) => {
             body: body,
             catId: category
         }).then(()=>{
-            res.redirect('/');
+            res.redirect('/admin/articles');
         })
     }else{
         res.redirect('/admin/articles/new');
+    }
+});
+
+router.post("/articles/delete", (req,res) => {
+    var id = req.body.id;
+    if(id != undefined) { /* Se ele for Null*/
+        if(!isNaN(id)){ /*Se ele nao for um numero*/
+            //.destroy serve para deletar no banco
+            article.destroy({
+                where: {
+                    id:id
+                }
+            }).then(()=>{
+                res.redirect("/admin/articles");
+            });
+
+        }else{
+            res.redirect("/admin/articles");
+        }
+    }else{
+        res.redirect("/admin/articles");
     }
 });
 

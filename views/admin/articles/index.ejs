@@ -1,0 +1,50 @@
+<%- include('../../partials/header.ejs') %>
+    <%- include('../../partials/navbar.ejs') %>
+    <div class="container-category container">
+        <hr>
+        <h3>Artigos</h3>
+        <a href="/admin/articles/new"><button class="btn btn-success">Criar novo Artigo</button></a>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Titulo</th>
+                    <th>Slug</th>
+                    <th>Categoria</th>
+                    <th>Ações</th>
+                </tr>                
+            </thead>
+            <tbody>              
+              <% articles.forEach(article => { %>
+                <tr>
+                    <td><%= article.id %></td>
+                    <td><%= article.title %></td>
+                    <td><%= article.slug %></td>
+                    <td><%= article.category.title %></td>
+                    <td>
+                        <form method="POST" action="/articles/delete" style="display: inline;" onsubmit="confirmarDelete(event, this)"> <%# onsubmit para que apareça o popup se quer confirmar DEVERA TER O SCRIPT! %>
+                            <input type="hidden" name="id" value="<%= article.id %>">
+                            <button class="btn btn-danger"><i data-lucide="trash-2"></i></button>
+                        </form>
+                    </td>
+                </tr>
+              <% }) %>
+            </tbody>
+        </table>
+        <hr>
+    </div>
+<%- include('../../partials/footer.ejs') %>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+<%# Script para aparecer o PopUp se deseja confirmar o Delete %>
+<script> 
+    function confirmarDelete(event, form){
+        event.preventDefault();
+        var decision = confirm("Voce quer deletar esse Artigo?");
+         if(decision){
+            form.submit();
+        }
+    }
+</script>
