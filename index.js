@@ -31,20 +31,19 @@ connection.authenticate().then(() =>{
         console.log(error);
     })
 
-app.get("/",(req,res) =>{
-    Articles.findAll({
-        include: [{model: Category}] 
-    }).then(articles =>{
+
+app.get("/",(req,res) =>{  
+    Articles.findAll({order: [['id','DESC']],
+        include: [{model: Category}]}).then(articles =>{
         res.render("index",{articles: articles})
     })
-   
 });
 
 app.get("/login",(req,res) => {
     res.render("login")
 });
 
-app.get("/:slug",(req,res)=>{
+app.get("/article/:slug",(req,res)=>{
     var slug = req.params.slug;
     Articles.findOne({
         where: {
@@ -52,7 +51,24 @@ app.get("/:slug",(req,res)=>{
         }
     }).then(article => {
         if(article != undefined){
-            res.render("articles");
+            res.render("article",{article: article});
+        }else{
+            res.redirect("/");
+        }
+    }).catch(err =>{
+        res.redirect("/");
+    });
+});
+
+app.get("/category/:id",(req,res)=>{
+    var id = req.params.id;
+    Category.findOne({
+        where: {
+            id: id
+        }
+    }).then(category => {
+        if(category != undefined){
+            res.render("",{category: category});
         }else{
             res.redirect("/");
         }
