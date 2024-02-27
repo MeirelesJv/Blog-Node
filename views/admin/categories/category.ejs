@@ -1,0 +1,28 @@
+<%- include('../../partials/header.ejs') %>
+<body>
+    <%- include('../../partials/navbar.ejs') %>
+    <div class="container">
+        <div class="row mb-2 mt-5" >
+            <% articles.forEach(articles => { %>
+                <div class="col-md-6" >
+                    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative bg-white" >
+                        <div class="col p-4 d-flex flex-column position-static">
+                            <h3 class="mb-0"><%= articles.title %></h3>
+                            <div class="mb-1 text-muted">
+                                <%= articles.createdAt.toDateString() %>
+                            </div>
+                            <p class="card-text mb-auto"><%- truncate(articles.body, 100) %></p>
+                            <a href="/article/<%= articles.slug %>" >Continuar Lendo</a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</body>
+<%# Coloca um limite de texto para ser exibido! %>
+<% function truncate(text, maxLength) {
+    return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+    } 
+%>
+<%- include('../../partials/footer.ejs') %>

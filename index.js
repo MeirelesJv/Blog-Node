@@ -33,9 +33,9 @@ connection.authenticate().then(() =>{
 
 
 app.get("/",(req,res) =>{  
-    Articles.findAll({order: [['id','DESC']],
+    Articles.findAll({order: [['id','DESC']],limit: 4,
         include: [{model: Category}]}).then(articles =>{
-        res.render("index",{articles: articles})
+        res.render("index",{articles: articles,category: articles.categories})
     })
 });
 
@@ -60,19 +60,23 @@ app.get("/article/:slug",(req,res)=>{
     });
 });
 
-app.get("/category/:id",(req,res)=>{
-    var id = req.params.id;
+
+app.get("/category/:slug",(req,res) => {
+    var slug = req.params.slug;
     Category.findOne({
         where: {
-            id: id
-        }
-    }).then(category => {
+            slug: slug
+        },
+        include: [{model: Articles}]
+    }).then( category => {
         if(category != undefined){
-            res.render("",{category: category});
+            Category.findAll().then(categories =>{
+                res.render("./admin/categories/category",{articles: category.articles, categories: categories});
+            });
         }else{
             res.redirect("/");
         }
-    }).catch(err =>{
+    }).catch( err => {
         res.redirect("/");
-    });
-});
+    })
+})

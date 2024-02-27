@@ -1,6 +1,6 @@
 <%- include('../../partials/header.ejs') %>
     <%- include('../../partials/navbar.ejs') %>
-    <div class="container-category container">
+    <div class="container-category container  ">
         <hr>
         <h3>Categorias</h3>
         <a href="/admin/categories/new"><button class="btn btn-success">Criar nova Categoria</button></a>
@@ -17,7 +17,7 @@
             <tbody>              
                 <% categories.forEach(categories => { %>     
                 <tr>
-                    <th><%= categories.id %></th>
+                    <th class="table-active"><%= categories.id %></th>
                     <th><%= categories.title %></th>
                     <th><%= categories.slug %></th>
                     <th>

@@ -22,12 +22,14 @@
                     <td><%= article.title %></td>
                     <td><%= article.slug %></td>
                     <td><%= article.category.title %></td>
-                    <td>
-                        <form method="POST" action="/articles/delete" style="display: inline;" onsubmit="confirmarDelete(event, this)"> <%# onsubmit para que apareça o popup se quer confirmar DEVERA TER O SCRIPT! %>
+                    <th>
+                        <input type="hidden" name="id" value="<%= article.id %>" >
+                        <a href="/admin/article/edit/<%= article.id %>"><button class="btn btn-warning"><i data-lucide="pencil"></i></button></a>
+                        <form method="POST" action="/articles/delete"  onsubmit="confirmarDelete(event, this)"> <%# onsubmit para que apareça o popup se quer confirmar DEVERA TER O SCRIPT! %>
                             <input type="hidden" name="id" value="<%= article.id %>">
-                            <button class="btn btn-danger"><i data-lucide="trash-2"></i></button>
+                            <button class="btn btn-danger mt-1"><i data-lucide="trash-2"></i></button>
                         </form>
-                    </td>
+                    </th>
                 </tr>
               <% }) %>
             </tbody>

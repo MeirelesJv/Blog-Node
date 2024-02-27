@@ -1,18 +1,12 @@
-<%- include('partials/header.ejs') %>
+<%- include('../../partials/header.ejs') %>
 <body>
-    <%- include('partials/navbar.ejs') %>
+    <%- include('../../partials/navbar.ejs') %>
     <div class="container">
         <br>
-        <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
-            <div class="col-md-6 px-0">
-                <h1 class="display-4 font-italic">Blog de Fofocas do João</h1>
-                <p class="lead my-3">Aqui podemos obter exatamente todas e qualquer fofoca que pertence ao mundo de League Of Legends e Gay</p>
-                <a href="/articles/page/1"><button class="btn btn-primary">Todos os Artigos</button></a>
-            </div>
-        </div>
-        
+
         <div class="row mb-2" >
-            <% articles.forEach(article => { %>
+            <%# result que é a variavel que está a articles e Rows por conta do findAndCountAll %>
+            <% result.articles.rows.forEach(article => { %>
                     <div class="col-md-6" >
                         <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative bg-white" >
                             <div class="col p-4 d-flex flex-column position-static">
@@ -28,6 +22,24 @@
                     </div>
             <% }) %>
         </div>
+
+        <div class="row">
+            <div class="col col-12">
+                <%# Result: Variavel se havera proxima pagina ou nao que está no Route.
+                    Next: Variavel que está o numero da pagina no Route.  
+                %>
+                <% if (result.next) { %>
+                    <a href="/articles/page/<%= result.page + 1 %>" class="col-wh" style="float:right">Next >></a>
+                <% } %>
+                
+                <% if (result.page > 1) { %>
+                    <a href="/articles/page/<%= result.page - 1 %>" class="col-wh" style="float:left"><< Prev</a>
+                
+                <% } %>
+            </div>
+            <hr>
+        </div>
+
     </div>
 </body>
 <%# Coloca um limite de texto para ser exibido! %>
@@ -35,4 +47,4 @@
     return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
     } 
 %>
-<%- include('partials/footer.ejs') %>
+<%- include('../../partials/footer.ejs') %>
