@@ -9,9 +9,6 @@
 </head>
 
 <body>
-    <div class="logo">
-       <a href="/"><ion-icon name="home-sharp"></ion-icon></a>
-    </div>
     <div class="container">
         <h1>Entre com sua conta</h1>
         <div class="social-login">
@@ -24,19 +21,20 @@
             <div class="line"></div>
         </div>
         <form>
-            <label for="email">Email:</label>
+            <label for="email">E-mail:</label>
             <div class="custome-input">
-                <input type="email" name="email" placeholder="Seu Email" autocomplete="off">
+                <input type="email" name="email" placeholder="Insira o E-mail" autocomplete="off">
                 <i class='bx bx-at'></i>
             </div>
-            <label for="password">Password:</label>
+            <label for="password">Senha:</label>
             <div class="custome-input">
-                <input type="password" name="password" placeholder="Sua Senha">
+                <input type="password" name="password" placeholder="Insira a senha">
                 <i class='bx bx-lock-alt'></i>
             </div>
             <button class="login">Login</button>
             <div class="links">
-                <a href="#">Não possui uma conta?</a>
+                <a href="/cadastro">Não possui uma conta?</a>
+                <a href="/" style="display: right;">Esqueci a Senha.</a>
             </div>
         </form>
     </div>
@@ -44,4 +42,5 @@
 
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
 </html>

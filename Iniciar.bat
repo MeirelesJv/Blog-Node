@@ -1,4 +1,4 @@
 @echo off
-cd C:\Users\meire\OneDrive\Documentos\Node\Blog Node\Blog Node V1
+cd C:\Users\Joao\Documents\Node\BlogNode\Blog-Node
 nodemon index.js
 pause > nul
