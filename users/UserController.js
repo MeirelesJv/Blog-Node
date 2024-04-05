@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const user = require("./User");
+//Chamando a biblioteca 
+const bcrypt = require('bcryptjs');
 
 router.get("/login",(req,res)=>{
     res.render("login")
@@ -11,16 +13,14 @@ router.get("/cadastro",(req,res)=>{
 });
 
 router.post("/cadastros",(req,res)=>{
-    var Email = req.params.Email;
-    var Password = req.params.Password;
+    var email = req.body.email;
+    var password = req.body.password;
 
-    user.create({
-        
-    }).then(() => {
-        res.render("/")
-    }).catch((err) => {
-        res.redirect("/login")
-    });
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(password, salt);
+
+    //Testando para ver se está recebendo as variaveis certas.
+    res.json({email,password});
 });
 
 module.exports = router;
