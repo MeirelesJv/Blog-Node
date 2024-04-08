@@ -4,6 +4,7 @@ const bodyParse = require("body-parser");
 const connection = require("./database/database");
 const Articles = require("./articles/Article");
 const Category = require("./categories/Category");
+const session = require("express-session");
 
 // Connection
 app.listen(8080, () => {console.log("Sevidor Iniciado")})
@@ -11,6 +12,12 @@ app.listen(8080, () => {console.log("Sevidor Iniciado")})
 // BodyParse
 app.use(bodyParse.urlencoded({extended: false}));
 app.use(bodyParse.json());
+
+//Ativa o gerencimento de sessão
+app.use(session({
+    //Secret serve apenas para ter a sessão mais segura com um texto aleatorio
+    secret: "dasldçaslkdas", cookie:{maxAge: 30000} //MaxAge é o tempo que o cookie será mantido, milisegundos
+}))
 
 // Linkando a categoria com o index
 const categoriesController = require("./categories/CategoriesController");
@@ -31,6 +38,8 @@ connection.authenticate().then(() =>{
     }).catch((error) =>{
         console.log(error);
     })
+
+
 
 app.get("/",(req,res) =>{  
     Articles.findAll({order: [['id','DESC']],limit: 4,

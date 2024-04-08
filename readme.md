@@ -5,6 +5,7 @@ Blog criado utilizando Node.js
 
 <ul>
 <li>Express => Lidar com Rotas HTTP.</li>
+<li>Express-session => Gerencia sessões de usuário em aplicativos web| Indicado apenas para pequena escala, pois as sessões ficam na Ram do Servidor.</li>
 <li>EJS => Permite incorporar código JavaScript em arquivos HTML.</li>
 <li>Body-parser => Ele extrai esses dados recebidos pelo POST e os torna acessíveis no objeto req.body.</li>
 <li>Sequelize => Consegue conectar o codigo com o bancos de dados e manipular.</li>
