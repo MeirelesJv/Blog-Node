@@ -5,6 +5,7 @@ const connection = require("./database/database");
 const Articles = require("./articles/Article");
 const Category = require("./categories/Category");
 const session = require("express-session");
+const loginAuth = require("./middleware/loginAuth");
 
 // Connection
 app.listen(8080, () => {console.log("Sevidor Iniciado")})
@@ -48,7 +49,7 @@ app.get("/",(req,res) =>{
     })
 });
 
-app.get("/article/:slug",(req,res)=>{
+app.get("/article/:slug", (req,res)=>{
     var slug = req.params.slug;
     Articles.findOne({
         where: {
@@ -65,7 +66,7 @@ app.get("/article/:slug",(req,res)=>{
     });
 });
 
-app.get("/category/:slug",(req,res) => {
+app.get("/category/:slug", (req,res) => {
     var slug = req.params.slug;
     Category.findOne({
         where: {

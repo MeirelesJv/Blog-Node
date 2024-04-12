@@ -3,9 +3,10 @@ const router = express.Router();
 const category = require("../categories/Category");
 const article = require("./Article");
 const slugify = require("slugify");
+const loginAuth = require("../middleware/loginAuth")
 
 // Router é a mesma coisa que o app
-router.get("/admin/articles",(req,res) => {
+router.get("/admin/articles",loginAuth,(req,res) => {
     article.findAll({
         include: [{model: category}] //Inclui a categoria pois as duas estão relacionadas 
     }).then(articles =>{
@@ -13,13 +14,13 @@ router.get("/admin/articles",(req,res) => {
     })  
 });
 
-router.get("/admin/articles/new",(req,res) => {
+router.get("/admin/articles/new",loginAuth,(req,res) => {
     category.findAll().then(categories =>{
         res.render("admin/articles/new",{categories: categories})
     })   
 });
 
-router.post("/articles/save",(req,res) => {
+router.post("/articles/save",loginAuth,(req,res) => {
     var title = req.body.title;
     var body = req.body.bodyArtigo;
     var category = req.body.category;
@@ -38,7 +39,7 @@ router.post("/articles/save",(req,res) => {
     }
 });
 
-router.post("/articles/delete", (req,res) => {
+router.post("/articles/delete", loginAuth,(req,res) => {
     var id = req.body.id;
     if(id != undefined) { /* Se ele for Null*/
         if(!isNaN(id)){ /*Se ele nao for um numero*/
@@ -60,7 +61,7 @@ router.post("/articles/delete", (req,res) => {
 });
 
 //Criando a rota de edição e mandando as informações das cabelas Article e Category para poder ser acessado
-router.get("/admin/article/edit/:id", (req, res) => {
+router.get("/admin/article/edit/:id", loginAuth,(req, res) => {
     var id = req.params.id;
 
     article.findByPk(id).then(article => { // Metedo mais rapido para pesquisar por ID
@@ -78,7 +79,7 @@ router.get("/admin/article/edit/:id", (req, res) => {
     })
   });
 
-router.post("/article/update",(req,res) => {
+router.post("/article/update",loginAuth,(req,res) => {
     var id = req.body.id;
     var title = req.body.title;
     var body = req.body.body;
@@ -97,7 +98,7 @@ router.post("/article/update",(req,res) => {
 
 
 //Sistema de Paginação:
-router.get("/articles/page/:num",(req,res)=>{
+router.get("/articles/page/:num",loginAuth,(req,res)=>{
     var page = req.params.num;
     var offset = 0;
 
